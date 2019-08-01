@@ -38,7 +38,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         window = primaryStage;
-        window.setTitle("10min backgraund");
+        window.setTitle("10min background");
 
         window.setOnCloseRequest(event -> {
             event.consume();
@@ -53,6 +53,7 @@ public class Main extends Application {
         saveItem.setOnAction(event -> {
             Save.displey(data,players);
         });
+        MenuItem savePreviewItem=new MenuItem("Save _Preview...");
 
         MenuItem exitItem= new MenuItem("E_xit");
         exitItem.setOnAction(event -> closeProgram());
@@ -62,7 +63,7 @@ public class Main extends Application {
 
 
         //View menu Items
-        characterListItem = new CheckMenuItem("Character's List Visibil");
+        characterListItem = new CheckMenuItem("Character's List display");
         characterListItem.setOnAction(event -> {
             if(characterListItem.isSelected()){
                 PlayersList.displey(players,data);
@@ -168,9 +169,7 @@ public class Main extends Application {
         base.getChildren().addAll(q1,q2,q3,q4,q5);
         base.setVisible(false);
 
-        Button save=new Button("save");
-        save.setVisible(false);
-        save.setOnAction(event -> Save.displey(data,players));
+
         Button preview=new Button("preview");
         preview.setVisible(false);
 
@@ -179,7 +178,6 @@ public class Main extends Application {
                 if(isInt(inputplayers.getText())){
                     inputplayers.setVisible(false);
                     base.setVisible(true);
-                    save.setVisible(true);
                     players=Integer.parseInt(inputplayers.getText());
                     players--;
                     playersInfo.setText(playersInfo.getText()+(players+1));
@@ -194,7 +192,7 @@ public class Main extends Application {
         HBox dawn =new HBox(8);
         preview.setOnAction(event -> Preview.displey(Chose.displey(players,data),data));
 
-        dawn.getChildren().addAll(save,preview);
+        dawn.getChildren().addAll(preview);
         VBox layout = new VBox(8);
         layout.getChildren().addAll(menuBar,playerBox,base,dawn);
 
