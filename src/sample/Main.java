@@ -9,6 +9,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 
+
 public class Main extends Application {
     private static String[] ar;
     private Stage window;
@@ -19,8 +20,20 @@ public class Main extends Application {
         launch(args);
     }
 
-    int players;
-    PlayerData[] data;
+    private int players;
+    private PlayerData[] data;
+
+    //for run
+    static CheckMenuItem characterListItem;
+    public static boolean setCharacterListItemCheck(){
+        if(characterListItem.isSelected()){
+            characterListItem.setSelected(false);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -31,12 +44,11 @@ public class Main extends Application {
             event.consume();
             closeProgram();
         });
-        //Menu menu bar
-        MenuBar menuBar=new MenuBar();
-        menuBar.setVisible(false);
-        //File menu
-        Menu file=new Menu("_File");
-        //File menu items
+        //Separator
+        SeparatorMenuItem sep=new SeparatorMenuItem();
+
+
+        //File menu Items
         MenuItem saveItem=new MenuItem("_Save...");
         saveItem.setOnAction(event -> {
             Save.displey(data,players);
@@ -44,26 +56,45 @@ public class Main extends Application {
 
         MenuItem exitItem= new MenuItem("E_xit");
         exitItem.setOnAction(event -> closeProgram());
-
-        //add item File menu
-        SeparatorMenuItem sep=new SeparatorMenuItem();
+        //File menu
+        Menu file=new Menu("_File");
         file.getItems().addAll(saveItem,sep,exitItem);
 
 
-        menuBar.getMenus().addAll(file);
+        //View menu Items
+        characterListItem = new CheckMenuItem("Character's List Visibil");
+        characterListItem.setOnAction(event -> {
+            if(characterListItem.isSelected()){
+                PlayersList.displey(players,data);
+            }else {
+                PlayersList.closewindow();
+            }
+        });
+        characterListItem.setSelected(true);
+        //View menu
+        Menu View= new Menu("_View");
+        View.getItems().addAll(characterListItem);
 
-        Button help = new Button("help");
-        help.setOnAction(event -> Hepl.displey());
-        Button list = new Button("C. List");
-        list.setOnAction(event ->
-                PlayersList.displey(players,data));
-        list.setVisible(false);
+        //Help menu Items
+        MenuItem helpItem=new MenuItem("Help");
+        helpItem.setOnAction(event -> Hepl.displey());
+        //Help menu
+        Menu help=new Menu("_Help");
+        help.getItems().addAll(helpItem);
+
+
+
+        //Menu menu bar
+        MenuBar menuBar=new MenuBar();
+        menuBar.setVisible(false);
+            menuBar.getMenus().addAll(file,View,help);
+
         Label playersInfo=new Label("number of players: ");
         TextField inputplayers= new TextField("key in number of players");
 
 
         HBox playerBox = new HBox(0);
-        playerBox.getChildren().addAll(playersInfo ,inputplayers,help,list);
+        playerBox.getChildren().addAll(playersInfo ,inputplayers);
 
         Label q1text = new Label("idea for step 1: ");
         TextField inputq1= new TextField("");
@@ -155,7 +186,6 @@ public class Main extends Application {
                     data=new PlayerData[players+1];
                     for(int i=0;i<=players;i++)data[i]=new PlayerData(ChoseName.displey(i));
                     PlayersList.displey(players,data);
-                    list.setVisible(true);
                     preview.setVisible(true);
                     menuBar.setVisible(true);
                 }
@@ -167,7 +197,6 @@ public class Main extends Application {
         dawn.getChildren().addAll(save,preview);
         VBox layout = new VBox(8);
         layout.getChildren().addAll(menuBar,playerBox,base,dawn);
-        //layout.setPadding(new Insets(16,24,24,24));
 
         scene1 = new Scene(layout, 480, 400);
         window.setScene(scene1);
