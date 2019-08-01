@@ -2,7 +2,6 @@ package sample;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -11,7 +10,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import javax.swing.*;
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
