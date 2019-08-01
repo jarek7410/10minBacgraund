@@ -1,0 +1,21 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="10minBachgraund">
+    <output-path>$PROJECT_DIR$/out/artifacts/10minBachgraund</output-path>
+    <properties id="javafx-properties">
+      <options>
+        <option name="appClass" value="sample.Main" />
+        <option name="description" value="" />
+        <option name="htmlPlaceholderId" value="" />
+        <option name="nativeBundle" value="all" />
+        <option name="title" value="10min backgraund" />
+        <option name="vendor" value="JarK" />
+        <option name="version" value="01" />
+      </options>
+    </properties>
+    <root id="root">
+      <element id="archive" name="10minBachgraund.jar">
+        <element id="module-output" name="10minBachgraund" />
+      </element>
+    </root>
+  </artifact>
+</component>

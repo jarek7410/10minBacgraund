@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="de32bfcd-0c11-4533-ab52-e4c128f08647" name="mY" url="https://github.com/jarek7410/10minBacgraund">
+        <fileTransfer port="0" accessType="LOCAL" />
+      </webServer>
+      <webServer id="172f869d-1963-4731-b7b8-840357d9d059" name="My" url="https://github.com/jarek7410/10minBacgraund">
+        <fileTransfer port="0" accessType="LOCAL" />
+      </webServer>
+    </option>
+  </component>
+</project>
