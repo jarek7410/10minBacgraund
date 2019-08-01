@@ -27,7 +27,7 @@ public class Save extends JFrame{
         if(a==JFileChooser.APPROVE_OPTION){
             place=dir.getSelectedFile();
         } else {
-            System.out.println("Open command cancelled by user.\n" );
+            System.out.println("Open command cancelled by user .\n" );
         }
     }
 
