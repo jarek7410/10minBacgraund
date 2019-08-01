@@ -1,10 +1,15 @@
 package sample;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -51,15 +56,21 @@ public class Main extends Application {
         //File menu Items
         MenuItem saveItem=new MenuItem("_Save...");
         saveItem.setOnAction(event -> {
-            Save.displey(data,players);
+            AlertBox.displey("Error","it's not done yet");
         });
         MenuItem savePreviewItem=new MenuItem("Save _Preview...");
+        savePreviewItem.setOnAction(event -> {
+            AlertBox.displey("Error","it's not done yet") ;
+        });
+        Menu exportPlayers=new Menu("Export Player to TXT");
+        MenuItem[] exPlayers=new MenuItem[players+1];
+
 
         MenuItem exitItem= new MenuItem("E_xit");
         exitItem.setOnAction(event -> closeProgram());
         //File menu
         Menu file=new Menu("_File");
-        file.getItems().addAll(saveItem,sep,exitItem);
+        file.getItems().addAll(saveItem,sep,exportPlayers,savePreviewItem,new SeparatorMenuItem(),exitItem);
 
 
         //View menu Items
@@ -90,16 +101,19 @@ public class Main extends Application {
         menuBar.setVisible(false);
             menuBar.getMenus().addAll(file,View,help);
 
-        Label playersInfo=new Label("number of players: ");
+        Label playersInfo = new Label("number of players: ");
         TextField inputplayers= new TextField("key in number of players");
+        Region region = new Region();
+        region.setPrefSize(16,16);
+
 
 
         HBox playerBox = new HBox(0);
-        playerBox.getChildren().addAll(playersInfo ,inputplayers);
+        playerBox.getChildren().addAll(region,playersInfo ,inputplayers);
 
         Label q1text = new Label("idea for step 1: ");
-        TextField inputq1= new TextField("");
-        inputq1.setPrefSize(300,80);
+        TextArea inputq1= new TextArea("");
+        inputq1.setPrefSize(300,120);
         inputq1.setOnKeyPressed(event -> {
             if(event.getCode()==KeyCode.ENTER){
                 System.out.println("q1 answer: "+inputq1.getText());
@@ -114,8 +128,8 @@ public class Main extends Application {
         q1.getChildren().addAll(q1text,inputq1);
 
         Label q2text = new Label("idea for step 2: ");
-        TextField inputq2= new TextField();
-        inputq2.setPrefSize(300,80);
+        TextArea inputq2= new TextArea();
+        inputq2.setPrefSize(300,120);
         inputq2.setOnKeyPressed(event -> {
             if(event.getCode()==KeyCode.ENTER){
                 System.out.println("q2 answer: "+inputq2.getText());
@@ -127,8 +141,8 @@ public class Main extends Application {
         q2.getChildren().addAll(q2text,inputq2);
 
         Label q3text = new Label("idea for step 3: ");
-        TextField inputq3= new TextField();
-        inputq3.setPrefSize(300,80);
+        TextArea inputq3= new TextArea();
+        inputq3.setPrefSize(300,120);
         inputq3.setOnKeyPressed(event -> {
             if(event.getCode()==KeyCode.ENTER){
                 System.out.println("q3 answer: "+inputq3.getText());
@@ -140,8 +154,8 @@ public class Main extends Application {
         q3.getChildren().addAll(q3text,inputq3);
 
         Label q4text = new Label("idea for step 4: ");
-        TextField inputq4= new TextField();
-        inputq4.setPrefSize(300,80);
+        TextArea inputq4= new TextArea();
+        inputq4.setPrefSize(300,120);
         inputq4.setOnKeyPressed(event -> {
             if(event.getCode()==KeyCode.ENTER){
                 System.out.println("q4 answer: "+inputq4.getText());
@@ -153,8 +167,8 @@ public class Main extends Application {
         q4.getChildren().addAll(q4text,inputq4);
 
         Label q5text = new Label("idea for step 5: ");
-        TextField inputq5= new TextField();
-        inputq5.setPrefSize(300,80);
+        TextArea inputq5= new TextArea();
+        inputq5.setPrefSize(300,120);
         inputq5.setOnKeyPressed(event -> {
             if(event.getCode()==KeyCode.ENTER){
                 System.out.println("q5 answer: "+inputq5.getText());
@@ -167,11 +181,8 @@ public class Main extends Application {
 
         VBox base = new VBox(16);
         base.getChildren().addAll(q1,q2,q3,q4,q5);
+        base.setPadding(new Insets(8,32,32,32));
         base.setVisible(false);
-
-
-        Button preview=new Button("preview");
-        preview.setVisible(false);
 
         inputplayers.setOnKeyPressed(event ->{
             if(event.getCode()==KeyCode.ENTER)
@@ -184,22 +195,35 @@ public class Main extends Application {
                     data=new PlayerData[players+1];
                     for(int i=0;i<=players;i++)data[i]=new PlayerData(ChoseName.displey(i));
                     PlayersList.displey(players,data);
-                    preview.setVisible(true);
                     menuBar.setVisible(true);
-                }
-                else AlertBox.displey("Player number","Players number must be intiger number");
-        });
-        HBox dawn =new HBox(8);
-        preview.setOnAction(event -> Preview.displey(Chose.displey(players,data),data));
+                    MenuItem mew;
+                    for (int i = 0; i <= players; i++) {
+                     //   exPlayers[i]=new MenuItem("Player "+(i+1)+"...");
+                        mew=new MenuItem("Player "+(i+1)+"...");
+                        mew.setId(""+i);
+                        mew.setOnAction(event1 -> {
+                            exportPlayerAction(event1);
 
-        dawn.getChildren().addAll(preview);
+                        });
+                        exportPlayers.getItems().add(mew);
+
+                    }
+                }
+                else AlertBox.displey("Player number","Players number must be integer number");
+        });
         VBox layout = new VBox(8);
-        layout.getChildren().addAll(menuBar,playerBox,base,dawn);
+        layout.getChildren().addAll(menuBar,playerBox,base);
 
         scene1 = new Scene(layout, 480, 400);
         window.setScene(scene1);
         window.show();
     }
+
+    private void exportPlayerAction(Event event) {
+        MenuItem menuItem = (MenuItem) event.getSource();
+
+    }
+
 
     private boolean isInt(String text) {
         try{

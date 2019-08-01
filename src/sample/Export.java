@@ -15,11 +15,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 
-public class Save extends JFrame{
+public class Export extends JFrame{
 
     private static File place = new File("characters/");
     private JFileChooser dir=new JFileChooser(place);
-    public Save(){
+    public Export(){
         dir.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         dir.setAcceptAllFileFilterUsed(false);
         dir.setDialogTitle("Choose save place");
@@ -47,7 +47,7 @@ public class Save extends JFrame{
                     int a=Integer.parseInt(name.getText())-1;
                     if(a<=players){
                         try {
-                            new Save();
+                            new Export();
                             if(!place.exists()) place.mkdir();
 
                             PrintWriter zapis = new PrintWriter(place+"/"+data[a].name+".txt");

@@ -61,5 +61,10 @@ public class PlayerData{
         }
         return s;
     }
+    public void backs1(){
+        if(!s1.isEmpty()){
+            s1.remove(s1.size()-1);
+        }
+    }
 
 }
