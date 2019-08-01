@@ -9,6 +9,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 
+
 public class Main extends Application {
     private static String[] ar;
     private Stage window;
@@ -19,51 +20,82 @@ public class Main extends Application {
         launch(args);
     }
 
-    int players;
-    PlayerData[] data;
+    private int players;
+    private PlayerData[] data;
+
+    //for run
+    static CheckMenuItem characterListItem;
+    public static boolean setCharacterListItemCheck(){
+        if(characterListItem.isSelected()){
+            characterListItem.setSelected(false);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         window = primaryStage;
-        window.setTitle("10min backgraund");
+        window.setTitle("10min background");
 
         window.setOnCloseRequest(event -> {
             event.consume();
             closeProgram();
         });
-        //Menu menu bar
-        MenuBar menuBar=new MenuBar();
-        menuBar.setVisible(false);
-        //File menu
-        Menu file=new Menu("_File");
-        //File menu items
+        //Separator
+        SeparatorMenuItem sep=new SeparatorMenuItem();
+
+
+        //File menu Items
         MenuItem saveItem=new MenuItem("_Save...");
         saveItem.setOnAction(event -> {
             Save.displey(data,players);
         });
+        MenuItem savePreviewItem=new MenuItem("Save _Preview...");
 
         MenuItem exitItem= new MenuItem("E_xit");
         exitItem.setOnAction(event -> closeProgram());
-
-        //add item File menu
-        SeparatorMenuItem sep=new SeparatorMenuItem();
+        //File menu
+        Menu file=new Menu("_File");
         file.getItems().addAll(saveItem,sep,exitItem);
 
 
-        menuBar.getMenus().addAll(file);
+        //View menu Items
+        characterListItem = new CheckMenuItem("Character's List display");
+        characterListItem.setOnAction(event -> {
+            if(characterListItem.isSelected()){
+                PlayersList.displey(players,data);
+            }else {
+                PlayersList.closewindow();
+            }
+        });
+        characterListItem.setSelected(true);
+        //View menu
+        Menu View= new Menu("_View");
+        View.getItems().addAll(characterListItem);
 
-        Button help = new Button("help");
-        help.setOnAction(event -> Hepl.displey());
-        Button list = new Button("C. List");
-        list.setOnAction(event ->
-                PlayersList.displey(players,data));
-        list.setVisible(false);
+        //Help menu Items
+        MenuItem helpItem=new MenuItem("Help");
+        helpItem.setOnAction(event -> Hepl.displey());
+        //Help menu
+        Menu help=new Menu("_Help");
+        help.getItems().addAll(helpItem);
+
+
+
+        //Menu menu bar
+        MenuBar menuBar=new MenuBar();
+        menuBar.setVisible(false);
+            menuBar.getMenus().addAll(file,View,help);
+
         Label playersInfo=new Label("number of players: ");
         TextField inputplayers= new TextField("key in number of players");
 
 
         HBox playerBox = new HBox(0);
-        playerBox.getChildren().addAll(playersInfo ,inputplayers,help,list);
+        playerBox.getChildren().addAll(playersInfo ,inputplayers);
 
         Label q1text = new Label("idea for step 1: ");
         TextField inputq1= new TextField("");
@@ -137,9 +169,7 @@ public class Main extends Application {
         base.getChildren().addAll(q1,q2,q3,q4,q5);
         base.setVisible(false);
 
-        Button save=new Button("save");
-        save.setVisible(false);
-        save.setOnAction(event -> Save.displey(data,players));
+
         Button preview=new Button("preview");
         preview.setVisible(false);
 
@@ -148,14 +178,12 @@ public class Main extends Application {
                 if(isInt(inputplayers.getText())){
                     inputplayers.setVisible(false);
                     base.setVisible(true);
-                    save.setVisible(true);
                     players=Integer.parseInt(inputplayers.getText());
                     players--;
                     playersInfo.setText(playersInfo.getText()+(players+1));
                     data=new PlayerData[players+1];
                     for(int i=0;i<=players;i++)data[i]=new PlayerData(ChoseName.displey(i));
                     PlayersList.displey(players,data);
-                    list.setVisible(true);
                     preview.setVisible(true);
                     menuBar.setVisible(true);
                 }
@@ -164,10 +192,9 @@ public class Main extends Application {
         HBox dawn =new HBox(8);
         preview.setOnAction(event -> Preview.displey(Chose.displey(players,data),data));
 
-        dawn.getChildren().addAll(save,preview);
+        dawn.getChildren().addAll(preview);
         VBox layout = new VBox(8);
         layout.getChildren().addAll(menuBar,playerBox,base,dawn);
-        //layout.setPadding(new Insets(16,24,24,24));
 
         scene1 = new Scene(layout, 480, 400);
         window.setScene(scene1);
