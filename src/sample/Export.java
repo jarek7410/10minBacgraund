@@ -2,7 +2,9 @@ package sample;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
@@ -16,8 +18,9 @@ import java.io.PrintWriter;
 
 
 public class Export extends JFrame{
-
+    static Stage window;
     private static File place = new File("characters/");
+    private static boolean saveing;
     private JFileChooser dir=new JFileChooser(place);
     public Export(){
         dir.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -25,49 +28,54 @@ public class Export extends JFrame{
         dir.setDialogTitle("Choose save place");
         int a=dir.showOpenDialog(this);
         if(a==JFileChooser.APPROVE_OPTION){
+            saveing=true;
             place=dir.getSelectedFile();
         } else {
             System.out.println("Open command cancelled by user .\n" );
+            AlertBox.displey("STOP","Expotring was stopped");
+            saveing=false;
         }
     }
 
     public static void displey(PlayerData[] data, int a){
-        Stage window = new Stage();
-
+        window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Exported");
         window. setMinWidth(250);
 
         Label label = new Label();
         label.setText("Player "+(a+1)+" was exported");
-                        try {
-                            new Export();
-                            if(!place.exists()) place.mkdir();
+        new Export();
+                        if(saveing){
+                            try {
 
-                            PrintWriter zapis = new PrintWriter(place+"/"+data[a].name+".txt");
-                            zapis.println("name: "+data[a].name);
-                            zapis.println("1.step");
-                            zapis.print(data[a].gets1());
-                            zapis.println("2.step");
-                            zapis.print(data[a].gets2());
-                            zapis.println("3.step");
-                            zapis.print(data[a].gets3());
-                            zapis.println("4.step");
-                            zapis.print(data[a].gets4());
-                            zapis.println("5.step");
-                            zapis.print(data[a].gets5());
-                            zapis.println("");
-                            zapis.close();
-                            window.close();
-                        } catch (IOException e) {
+                                if(!place.exists()) place.mkdir();
+
+                                PrintWriter zapis = new PrintWriter(place+"/"+data[a].name+".txt");
+                                zapis.println("name: "+data[a].name);
+                                zapis.println("1.step");
+                                zapis.print(data[a].gets1());
+                                zapis.println("2.step");
+                                zapis.print(data[a].gets2());
+                                zapis.println("3.step");
+                                zapis.print(data[a].gets3());
+                                zapis.println("4.step");
+                                zapis.print(data[a].gets4());
+                                zapis.println("5.step");
+                                zapis.print(data[a].gets5());
+                                zapis.println("");
+                                zapis.close();
+                            } catch (IOException e) {
+                                AlertBox.displey("ERROE","something doesn't work\n(\"Save\")");
+                            }
+                        }else {
                             AlertBox.displey("ERROE","something doesn't work\n(\"Save\")");
+                            label.setText("Player "+(a+1)+" wasn't exported");
                         }
-
-
-
-
+        Button close = new Button("Ok");
+        close.setOnAction(event -> window.close());
         VBox layout = new VBox(20);
-        layout.getChildren().addAll(label);
+        layout.getChildren().addAll(label,new Separator(),close);
         layout.setAlignment(Pos.CENTER);
 
         Scene scene= new Scene(layout,250,150);

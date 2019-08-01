@@ -58,11 +58,11 @@ public class Main extends Application {
         saveItem.setOnAction(event -> {
             AlertBox.displey("Error","it's not done yet");
         });
-        MenuItem savePreviewItem=new MenuItem("Save _Preview...");
+        MenuItem savePreviewItem=new MenuItem("Export _Preview...");
         savePreviewItem.setOnAction(event -> {
-            AlertBox.displey("Error","it's not done yet") ;
+            Preview.displey(PlayerChose.displey(players,data),data);
         });
-        Menu exportPlayers=new Menu("Export Player to TXT");
+        Menu exportPlayers=new Menu("_Export Player to TXT");
         MenuItem[] exPlayers=new MenuItem[players+1];
 
 
@@ -82,7 +82,6 @@ public class Main extends Application {
                 PlayersList.closewindow();
             }
         });
-        characterListItem.setSelected(true);
         //View menu
         Menu View= new Menu("_View");
         View.getItems().addAll(characterListItem);
@@ -194,12 +193,11 @@ public class Main extends Application {
                     playersInfo.setText(playersInfo.getText()+(players+1));
                     data=new PlayerData[players+1];
                     for(int i=0;i<=players;i++)data[i]=new PlayerData(ChoseName.displey(i));
-                    PlayersList.displey(players,data);
                     menuBar.setVisible(true);
                     MenuItem mew;
                     for (int i = 0; i <= players; i++) {
                      //   exPlayers[i]=new MenuItem("Player "+(i+1)+"...");
-                        mew=new MenuItem("Player "+(i+1)+"...");
+                        mew=new MenuItem("Player _"+(i+1)+"...");
                         mew.setId(""+i);
                         mew.setOnAction(event1 -> {
                             exportPlayerAction(event1);
