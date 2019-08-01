@@ -31,21 +31,15 @@ public class Export extends JFrame{
         }
     }
 
-    public static void displey(PlayerData[] data, int players){
+    public static void displey(PlayerData[] data, int a){
         Stage window = new Stage();
 
         window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("saveing");
+        window.setTitle("Exported");
         window. setMinWidth(250);
 
         Label label = new Label();
-        label.setText("witch charakter you wont to save?\n(key in int number)\n(from 1 to "+(players+1)+")");
-        TextField name=new TextField();
-        name.setOnKeyPressed(event -> {
-            if(event.getCode()==KeyCode.ENTER)
-                if(isInt(name.getText())){
-                    int a=Integer.parseInt(name.getText())-1;
-                    if(a<=players){
+        label.setText("Player "+(a+1)+" was exported");
                         try {
                             new Export();
                             if(!place.exists()) place.mkdir();
@@ -64,23 +58,16 @@ public class Export extends JFrame{
                             zapis.print(data[a].gets5());
                             zapis.println("");
                             zapis.close();
-                            AlertBox.displey("saved","the "+data[a].name+"'s data was saved.");
                             window.close();
                         } catch (IOException e) {
                             AlertBox.displey("ERROE","something doesn't work\n(\"Save\")");
                         }
-                    }else{
-                        AlertBox.displey("to big","you hew less players then "+(a)+".\nkey in smaller number");
-                        name.setText("");
-                    }
-
-                }else AlertBox.displey("Player number", "Players number must be intiger number");
 
 
-        });
+
 
         VBox layout = new VBox(20);
-        layout.getChildren().addAll(label,name);
+        layout.getChildren().addAll(label);
         layout.setAlignment(Pos.CENTER);
 
         Scene scene= new Scene(layout,250,150);

@@ -221,7 +221,7 @@ public class Main extends Application {
 
     private void exportPlayerAction(Event event) {
         MenuItem menuItem = (MenuItem) event.getSource();
-
+        Export.displey(data,Integer.parseInt(menuItem.getId()));
     }
 
 
