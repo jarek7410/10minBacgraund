@@ -18,15 +18,16 @@ import javafx.stage.Stage;
 public class Main extends Application {
     private static String[] ar;
     private Stage window;
-    private Scene scene1, scene2;
+    private Scene scene1;
 
     public static void main(String[] args) {
         ar=args;
         launch(args);
     }
 
-    private int players;
-    private PlayerData[] data;
+    private static int players;
+    private static PlayerData[] data;
+    static Label playersInfo;
 
     //for run
     static CheckMenuItem characterListItem;
@@ -49,28 +50,37 @@ public class Main extends Application {
             event.consume();
             closeProgram();
         });
-        //Separator
-        SeparatorMenuItem sep=new SeparatorMenuItem();
 
 
         //File menu Items
         MenuItem saveItem=new MenuItem("_Save...");
         saveItem.setOnAction(event -> {
-            AlertBox.displey("Error","it's not done yet");
+            Save.displey(data,players);
+        });
+        MenuItem loadItem=new MenuItem("_Load...");
+        loadItem.setOnAction(event -> {
+            Load.displey();
         });
         MenuItem savePreviewItem=new MenuItem("Export _Preview...");
         savePreviewItem.setOnAction(event -> {
             Preview.displey(PlayerChose.displey(players,data),data);
         });
         Menu exportPlayers=new Menu("_Export Player to TXT");
-        MenuItem[] exPlayers=new MenuItem[players+1];
 
 
         MenuItem exitItem= new MenuItem("E_xit");
         exitItem.setOnAction(event -> closeProgram());
         //File menu
         Menu file=new Menu("_File");
-        file.getItems().addAll(saveItem,sep,exportPlayers,savePreviewItem,new SeparatorMenuItem(),exitItem);
+        file.getItems().addAll(
+                saveItem,
+                loadItem,
+                new SeparatorMenuItem(),
+                exportPlayers,
+                savePreviewItem,
+                new SeparatorMenuItem(),
+                exitItem
+        );
 
 
         //View menu Items
@@ -100,7 +110,8 @@ public class Main extends Application {
         menuBar.setVisible(false);
             menuBar.getMenus().addAll(file,View,help);
 
-        Label playersInfo = new Label("number of players: ");
+
+        playersInfo = new Label("number of players: ");
         TextField inputplayers= new TextField("key in number of players");
         Region region = new Region();
         region.setPrefSize(16,16);
@@ -119,7 +130,6 @@ public class Main extends Application {
                 String  s=inputq1.getText();
                 int k=PlayerChose.displey(players,data);
                 data[k].adds1(s);
-                System.err.println(data[0].gets1());
                 inputq1.setText("");
             }
         });
@@ -217,6 +227,13 @@ public class Main extends Application {
         window.show();
     }
 
+    public static void load(PlayerData[] data1, int players1){
+        data=data1;
+        players=players1;
+        playersInfo.setText("number of players: "+players1);
+    }
+
+
     private void exportPlayerAction(Event event) {
         MenuItem menuItem = (MenuItem) event.getSource();
         Export.displey(data,Integer.parseInt(menuItem.getId()));
@@ -238,8 +255,6 @@ public class Main extends Application {
             System.out.println("Sefe Exit");
         window.close();
         System.exit(0);}
-
-
     }
 
 

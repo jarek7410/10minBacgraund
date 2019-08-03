@@ -1,0 +1,22 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="10minBackground">
+    <output-path>$PROJECT_DIR$/out/artifacts/10minBackground</output-path>
+    <properties id="javafx-properties">
+      <options>
+        <option name="appClass" value="" />
+        <option name="description" value="" />
+        <option name="enabledSigning" value="true" />
+        <option name="htmlPlaceholderId" value="" />
+        <option name="nativeBundle" value="all" />
+        <option name="title" value="10minBackground" />
+        <option name="vendor" value="JarK" />
+        <option name="version" value="" />
+      </options>
+    </properties>
+    <root id="root">
+      <element id="archive" name="github__kopia.jar">
+        <element id="module-output" name="github — kopia" />
+      </element>
+    </root>
+  </artifact>
+</component>

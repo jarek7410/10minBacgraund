@@ -63,7 +63,7 @@ public class SaveLoad {
         outputStream.writeChar(a);
     }
     public void writeString(String a) throws IOException {
-        outputStream.write(a.length());
+        outputStream.writeInt(a.length());
         outputStream.writeChars(a);
     }
 
@@ -99,7 +99,7 @@ public class SaveLoad {
         String s="";
 
         for(int i=0;i<inputStream.readInt();i++)
-            s=s+inputStream.readChar();
+            s+=inputStream.readChar();
         return s;
     }
 

@@ -5,8 +5,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
-import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -20,20 +18,21 @@ import java.io.PrintWriter;
 public class Export extends JFrame{
     static Stage window;
     private static File place = new File("characters/");
-    private static boolean saveing;
+    private static boolean exported;
     private JFileChooser dir=new JFileChooser(place);
     public Export(){
         dir.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         dir.setAcceptAllFileFilterUsed(false);
         dir.setDialogTitle("Choose save place");
+        dir.setSelectedFile(place);
         int a=dir.showOpenDialog(this);
         if(a==JFileChooser.APPROVE_OPTION){
-            saveing=true;
+            exported =true;
             place=dir.getSelectedFile();
         } else {
             System.out.println("Open command cancelled by user .\n" );
             AlertBox.displey("STOP","Expotring was stopped");
-            saveing=false;
+            exported =false;
         }
     }
 
@@ -46,7 +45,7 @@ public class Export extends JFrame{
         Label label = new Label();
         label.setText("Player "+(a+1)+" was exported");
         new Export();
-                        if(saveing){
+                        if(exported){
                             try {
 
                                 if(!place.exists()) place.mkdir();

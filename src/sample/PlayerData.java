@@ -61,6 +61,59 @@ public class PlayerData{
         }
         return s;
     }
+
+    protected String[] gets1Strings(){
+        String[] s=new String[s1.size()];
+        for(int i = 0;i<s1.size();i++){
+            s[i] = s1.get(i);
+        }
+        return s;
+    }
+    protected String[] gets2Strings(){
+        String[] s=new String[s2.size()];
+        for(int i = 0;i<s2.size();i++){
+            s[i] = s2.get(i);
+        }
+        return s;
+    }
+    protected String[] gets3Strings(){
+        String[] s=new String[s3.size()];
+        for(int i = 0;i<s3.size();i++){
+            s[i] = s3.get(i);
+        }
+        return s;
+    }
+    protected String[] gets4Strings(){
+        String[] s=new String[s4.size()];
+        for(int i = 0;i<s4.size();i++){
+            s[i] = s4.get(i);
+        }
+        return s;
+    }
+    protected String[] gets5Strings(){
+        String[] s=new String[s5.size()];
+        for(int i = 0;i<s5.size();i++){
+            s[i] = s5.get(i);
+        }
+        return s;
+    }
+
+    public int gets1Size(){
+        return s1.size();
+    }
+    public int gets2Size(){
+        return s2.size();
+    }
+    public int gets3Size(){
+        return s3.size();
+    }
+    public int gets4Size(){
+        return s4.size();
+    }
+    public int gets5Size(){
+        return s5.size();
+    }
+
     public void backs1(){
         if(!s1.isEmpty()){
             s1.remove(s1.size()-1);
